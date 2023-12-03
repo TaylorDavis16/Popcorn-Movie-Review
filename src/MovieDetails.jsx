@@ -5,7 +5,8 @@ import { useKey } from "./hooks/useKey"
 import Loader from "./Loader"
 import StarRating from "./StarRating"
 
-const KEY = "b2453ff5"
+// const KEY = "b2453ff5"
+const KEY = "ea351ee5"
 
 export default function MovieDetails({
   selectedId,
@@ -44,6 +45,8 @@ export default function MovieDetails({
     Genre: genre,
   } = movie
 
+  console.log(movie);
+
   function handleAdd() {
     const newWatchedMovie = {
       imdbID: selectedId,
@@ -66,9 +69,14 @@ export default function MovieDetails({
       async function getMovieDetails() {
         setIsLoading(true)
         const res = await fetch(
-          `https://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
+          // `https://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
+          `http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
         )
         const data = await res.json()
+        if (data.Poster === "N/A") {
+          data.Poster =
+            "../../public/resources/Movie Poster.png"
+        }
         setMovie(data)
         setIsLoading(false)
       }
